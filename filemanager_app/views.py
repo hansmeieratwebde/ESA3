@@ -4,9 +4,8 @@ from files3.settings import MEDIA_ROOT
 from filemanager import FileManager
 import os
 
-#in this class I implement customisations on the file manager app
+# in this class I implement customisations on the file manager app
 class ModdedFileManager(FileManager):
-
     def directory_structure(self):
 
         self.idee = 0
@@ -29,7 +28,12 @@ class ModdedFileManager(FileManager):
         return dir_structure
 
 
-def view(request, path):
+#this view requires login
+from django.contrib.auth.decorators import login_required
+
+
+@login_required(login_url='/accounts/login/')
+def filemanager_view(request, path):
     fm = ModdedFileManager(MEDIA_ROOT + '/uploads/')
 
     return fm.render(request, path)
