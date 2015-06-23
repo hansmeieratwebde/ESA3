@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 
 
-from filemanager import path_end
+from filemanager import path_end #?P<path>[\w\d_ -/.]*)$
 
 urlpatterns = patterns('',
 

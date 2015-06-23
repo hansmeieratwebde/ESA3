@@ -42,6 +42,8 @@ INSTALLED_APPS = (
     'allauth.account',
 
      #end allauth
+
+     'easy_thumbnails',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -67,7 +69,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR+'/templates/allauth'),
-                 os.path.join((BASE_DIR, 'templates/filemanager'))],
+                 os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -132,11 +134,14 @@ STATIC_ROOT = ''
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = ( os.path.join('static'), )
+STATICFILES_DIRS = ( os.path.join(BASE_DIR, 'static'), )
 
 
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'templates'),
-)
 
+
+#allauth needs this
 SITE_ID = 4
+
+#settings for easy_thumbnails
+
+THUMBNAIL_SUBDIR = 'thumbnails'

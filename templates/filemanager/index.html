@@ -6,6 +6,7 @@
  <script type="text/javascript" src="{%static "filemanager/js/jquery/jquery-migrate.min.js" %}"></script>
  <script type="text/javascript" src="{%static "filemanager/js/jquery/zclip/jquery.zclip.min.js"%}"></script>
  <link rel="stylesheet" type="text/css" href="{%static "filemanager/css/style.css" %}"/>
+
  <!--[if IE]>
    <script type="text/javascript" src="{{ STATIC_URL }}js/es5-shim.min.js"></script>
  <![endif]-->
@@ -16,6 +17,7 @@
  var ckeditor_baseurl = '{{ ckeditor_baseurl }}';
  var CKEditorFuncNum = {% if CKEditorFuncNum %}{{CKEditorFuncNum}}{% else %}null{%endif%};
  var static_url = '{%static "" %}';
+ var path_to_upload_folder = static_url + 'filemanager/uploads/'
  {% if public_url_base %}
   var public_url_base = '{{public_url_base}}';
  {% endif %}
@@ -43,11 +45,14 @@
      <input type="submit" id="submit" name="submit" value="Submit" style="display:none;">
    <label class="control" id="upload-label" for="ufile">
     <img src="{%static "" %}filemanager/images/upload.png" style="width:16px;height:16px" width="100%" height="100%"/>
-    <span>Upload Files</span>
+    <span>Upload File</span>
    </label>
+
    </form>
+
    <div id="message">
    </div>
+        <a href="/accounts/logout"><button id ="logout-button" class ="button">Log out</button></a>
    </div>
    <div id="content">
    </div>
