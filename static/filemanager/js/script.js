@@ -136,7 +136,7 @@ function show_files(id)
   { var ext = files[f].split('.')[(files[f].split('.').length-1)];
     $('#content').append("<div class='file' title='"+files[f]+"'"+
        "onmousedown='rightclick_handle(event,\""+files[f]+"\",\"file\");'><div class='thumbnail'>"+
-       "<div style=\"background-image:url('"+path_to_upload_folder+get_path(id).substr(1)+files[f]+"');\" width='60px' height='60px' ></div></div>"+
+       "<div style=\"background-image:url('"+path_to_upload_folder+get_path(id).substr(1)+"thumbnails/"+files[f]+thumbnail_extension+"');\" ' ></div></div>"+
        "<div class='filename'>"+files[f]+"</div></div>\n");
   }
   $('#status').html(get_path(id))

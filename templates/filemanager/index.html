@@ -18,6 +18,7 @@
  var CKEditorFuncNum = {% if CKEditorFuncNum %}{{CKEditorFuncNum}}{% else %}null{%endif%};
  var static_url = '{%static "" %}';
  var path_to_upload_folder = static_url + 'filemanager/uploads/'
+ var thumbnail_extension = ".100x100_q85_crop.jpg"
  {% if public_url_base %}
   var public_url_base = '{{public_url_base}}';
  {% endif %}

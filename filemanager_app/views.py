@@ -31,7 +31,7 @@ class ModdedFileManager(FileManager):
                 thumbnailer = get_thumbnailer(MEDIA_ROOT + '/static/filemanager/uploads'+directory+'/'+file)
 
                 thumbnail_options = {'crop': True}
-                for size in (50, 100, 250):
+                for size in (60, 120, 240):
                     thumbnail_options.update({'size': (size, size)})
                     thumbnailer.get_thumbnail(thumbnail_options)
 
