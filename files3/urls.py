@@ -17,7 +17,7 @@ from django.conf import settings
 from django.conf.urls import include, url, patterns
 from django.conf.urls.static import static
 from django.contrib import admin
-
+from django.views.generic import RedirectView
 
 from filemanager import path_end #?P<path>[\w\d_ -/.]*)$
 
@@ -26,7 +26,7 @@ urlpatterns = patterns('',
                        (r'^filemanager/'+path_end, 'filemanager_app.views.filemanager_view'),
                        (r'^admin/', include(admin.site.urls)),
                        (r'^accounts/', include('allauth.urls')),
-                       (r'^$'+path_end,'filemanager_app.views.filemanager_view'),
-                       (r'^accounts/profile/'+path_end,'filemanager_app.views.filemanager_view')
+                       (r'^$', RedirectView.as_view (url ='/filemanager/')),
+                       (r'^accounts/profile/', RedirectView.as_view (url ='/filemanager/'))
 
                        )+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)#https://docs.djangoproject.com/en/1.8/howto/static-files/

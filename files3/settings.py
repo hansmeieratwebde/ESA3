@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from django.core.files.uploadhandler import FileUploadHandler
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MEDIA_ROOT = BASE_DIR
@@ -145,3 +146,5 @@ SITE_ID = 4
 #settings for easy_thumbnails
 
 THUMBNAIL_SUBDIR = 'thumbnails'
+
+FileUploadHandler.chunk_size = 8192
