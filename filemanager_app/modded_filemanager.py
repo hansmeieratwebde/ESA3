@@ -17,6 +17,14 @@ from files3.settings import MEDIA_ROOT
 # in this class I implement customisations on the file manager app
 
 class ModdedFileManager(FileManager):
+    
+    
+    def get_file_extension(self, file):
+        # check for jpg extension
+        ext = file[file.rfind('.'):]
+        ext = ext[1:].lower()#remove dot and force lowercase
+        return ext
+
     def create_thumbnails(self, directory, files):
         """
         checks for image files and creates thumbnails with easy_thumbnails package
@@ -24,14 +32,12 @@ class ModdedFileManager(FileManager):
         :rtype : none
         """
         for file in files:
-            # check for jpg extension
-            ext = file[file.rfind('.'):]
-            ext = ext.lower()
-            if ext == '.jpg':
+            ext = self.get_file_extension(file)
+            if ext == 'jpg':
                 thumbnailer = get_thumbnailer(MEDIA_ROOT + '/static/filemanager/uploads' + directory + '/' + file)
 
                 thumbnail_options = {'crop': True}
-                for size in (60, 120, 240):
+                for size in (120, 240):
                     thumbnail_options.update({'size': (size, size)})
                     thumbnailer.get_thumbnail(thumbnail_options)
 
@@ -136,10 +142,14 @@ class ModdedFileManager(FileManager):
                 try:
                     os.chdir(self.basepath + path)
                     os.remove(name)
-                    #TODO: if jpg, delete thumbnails
+
+                    # if jpg, delete thumbnails
+                    if self.get_file_extension(name) == 'jpg':
+                      self.delete_thumbnails (path, name)
+
                     messages.append('File deleted successfully : ' + name)
                 except:
-                    messages.append('File couldn\'t deleted : ' + name)
+                    messages.append('File couldn\'t be deleted : ' + name)
         elif action == 'move' or action == 'copy':
             # from path to current_path
             if self.current_path.find(path) == 0:
@@ -210,3 +220,17 @@ class ModdedFileManager(FileManager):
             tarred.add(dirpath, arcname=dirname)
             tarred.close()
             return response
+
+    def delete_thumbnails(self, path, filename):
+        """deletes thumbnails in thumbnails subdirectory, is called when a jpg file is deleted
+
+        :param path:
+        :param filename:
+        :return: none
+        """
+        try:
+            os.chdir (self.basepath+path+'/thumbnails')
+            os.remove(filename+'.240x240_q85_crop.jpg')
+            os.remove(filename+'.120x120_q85_crop.jpg')
+        except IOError:
+           return 'Could not remove thumbnails'
