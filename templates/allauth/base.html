@@ -37,14 +37,14 @@
     {% endif %}
 
     <div>
-      <strong>Menu:</strong>
+    {% comment %}  <strong>Menu:</strong>{% endcomment %}
       <ul>
 	{% if user.is_authenticated %}
 	<li><a href="{% url 'account_email' %}">Change E-mail</a></li>
 	<li><a href="{% url 'account_logout' %}">Sign Out</a></li>
-	{% else %}
+	{% comment %}{% else %}
 	<li><a href="{% url 'account_login' %}">Sign In</a></li>
-	<li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+	<li><a href="{% url 'account_signup' %}">Sign Up</a></li>{% endcomment %}
 	{% endif %}
       </ul>
     </div>

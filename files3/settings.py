@@ -44,7 +44,7 @@ INSTALLED_APPS = (
 
      #end allauth
 
-     'easy_thumbnails',
+    'easy_thumbnails',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -147,4 +147,3 @@ SITE_ID = 4
 
 THUMBNAIL_SUBDIR = 'thumbnails'
 
-FileUploadHandler.chunk_size = 8192

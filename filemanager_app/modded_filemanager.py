@@ -5,6 +5,8 @@ import tarfile
 from django.http import HttpResponse
 import os, re
 from django.core.servers.basehttp import FileWrapper
+from sys import platform
+
 
 
 from easy_thumbnails.files import get_thumbnailer
@@ -34,12 +36,15 @@ class ModdedFileManager(FileManager):
         for file in files:
             ext = self.get_file_extension(file)
             if ext == 'jpg':
-                thumbnailer = get_thumbnailer(MEDIA_ROOT + '/static/filemanager/uploads' + directory + '/' + file)
+                try:
+                    thumbnailer = get_thumbnailer(MEDIA_ROOT + '/static/filemanager/uploads' + directory + '/' + file)
 
-                thumbnail_options = {'crop': True}
-                for size in (120, 240):
-                    thumbnail_options.update({'size': (size, size)})
-                    thumbnailer.get_thumbnail(thumbnail_options)
+                    thumbnail_options = {'crop': True}
+                    for size in (120, 240):
+                        thumbnail_options.update({'size': (size, size)})
+                        thumbnailer.get_thumbnail(thumbnail_options)
+                except IOError:
+                    pass
 
 
     #overrides method of superclass, changed: files shuld be opened as binary files, otherwise it won't work under windows
@@ -64,7 +69,9 @@ class ModdedFileManager(FileManager):
         if action == 'upload':
             for f in files.getlist('ufile'):
                 if re.search('\.\.', f.name) or not re.match('[\w\d_ -/.]+', f.name).group(0) == f.name:
-                    messages.append("File name is not valid : " + f.name)
+                    #TODO: This throws an encoding error with Umlauts in file names although the Encoding seems to be Unicode
+
+                    messages.append("File name is not valid")#removed f.name here due to encoding error
                 elif f.size > self.maxfilesize * 1024:
                     messages.append("File size exceeded " + str(self.maxfilesize) + " KB : " + f.name)
                 elif (settings.FILEMANAGER_CHECK_SPACE and
@@ -179,9 +186,14 @@ class ModdedFileManager(FileManager):
         dir_structure = {'': {'id': self.next_id(), 'open': 'yes', 'dirs': {}, 'files': []}}
         os.chdir(self.basepath)
         for directory, directories, files in os.walk('.'):
+
             # split has to be backslash on windows
-            #TODO: check for OS and adapt split value
-            directory_list = directory[1:].split('\\')
+            #check for OS and adapt split value
+            if platform == "win32":
+                directory_list = directory[1:].split('\\')
+            else:
+                directory_list = directory[1:].split('/')
+
             current_dir = None
             nextdirs = dir_structure
             for d in directory_list:

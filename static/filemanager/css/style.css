@@ -109,7 +109,12 @@ body{
   width:100px;
   height:100px;
   background:no-repeat center center;       
-}  
+}
+
+.thumbnail img {
+    width: 100px;
+    height: 100px;
+}
 .filename{
   text-align:center;
   text-overflow:ellipsis;
@@ -264,3 +269,4 @@ body{
     margin-left: 40px;
     height: 26px;padding: 2px;
 }
+
