@@ -12,3 +12,4 @@ gunicorn==19.1.1
 psycopg2==2.5.1
 static==0.4
 wsgiref==0.1.2
+-e git+https://github.com/IMGIITRoorkee/django-filemanager.git#egg=django-filemanager
