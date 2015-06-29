@@ -1,1 +1,1 @@
-web: gunicorn files3:app --log-file=-
+web: gunicorn files3.wsgi --log-file=-
