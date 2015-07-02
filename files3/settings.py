@@ -142,6 +142,8 @@ STATICFILES_DIRS = ( os.path.join(BASE_DIR, 'static'), )
 
 #allauth needs this
 SITE_ID = 4
+#custom allauth account adapter
+ACCOUNT_ADAPTER="filemanager_app.views.CustomAccountAdapter"
 
 #settings for easy_thumbnails
 

@@ -47,7 +47,7 @@ class ModdedFileManager(FileManager):
                     pass
 
 
-    #overrides method of superclass, changed: files shuld be opened as binary files, otherwise it won't work under windows
+    #overrides method of superclass, changed: files should be opened as binary files, otherwise it won't work under windows
     def handle_form(self, form, files):
         action = form.cleaned_data['action']
         path = form.cleaned_data['path']
@@ -179,7 +179,9 @@ class ModdedFileManager(FileManager):
                         messages.append('File/folder couldn\'t be moved/copied.')
         return messages
 
-
+    #overrides method of superclass
+    #makes it work on windows systems
+    #includes a function call for thumbnail creation
     def directory_structure(self):
 
         self.idee = 0
@@ -206,7 +208,7 @@ class ModdedFileManager(FileManager):
             current_dir['files'] = files
             #check for image files and create thumbnail if necessary
             if  directory.rfind(files3.settings.THUMBNAIL_SUBDIR) == -1:#do not create thumbnails of files in thumbnails directory
-                self.create_thumbnails(directory, files)
+                self.create_thumbnails(directory[1:], files)
 
         return dir_structure
 

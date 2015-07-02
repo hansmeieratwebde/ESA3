@@ -409,10 +409,10 @@ function show_thumbnails(id, ext, file) {
             })
     }
     function appendImgToDom(thumbnail_url) {
-        $('#content').append("<div class='file' title='" + files[f] + "'" +
-        "onmousedown='rightclick_handle(event,\"" + files[f] + "\",\"file\");'><div class='thumbnail'>" +
+        $('#content').append("<div class='file' title='" + file + "'" +
+        "onmousedown='rightclick_handle(event,\"" + file + "\",\"file\");'><div class='thumbnail'>" +
         "<img src=\"" + thumbnail_url + "\"></div>" +
-        "<div class='filename'>" + files[f] + "</div></div>\n");
+        "<div class='filename'>" + file + "</div></div>\n");
     }
 
 
