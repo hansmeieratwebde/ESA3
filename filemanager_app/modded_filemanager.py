@@ -46,6 +46,20 @@ class ModdedFileManager(FileManager):
                 except IOError:
                     pass
 
+    def delete_thumbnails(self, path, filename):
+        """deletes thumbnails in thumbnails subdirectory, is called when a jpg file is deleted
+
+        :param path:
+        :param filename:
+        :return: none
+        """
+        try:
+            os.chdir (self.basepath+path+'/thumbnails')
+            os.remove(filename+'.240x240_q85_crop.jpg')
+            os.remove(filename+'.120x120_q85_crop.jpg')
+        except IOError:
+           return 'Could not remove thumbnails'
+
 
     #overrides method of superclass, changed: files should be opened as binary files, otherwise it won't work under windows
     def handle_form(self, form, files):
@@ -235,16 +249,4 @@ class ModdedFileManager(FileManager):
             tarred.close()
             return response
 
-    def delete_thumbnails(self, path, filename):
-        """deletes thumbnails in thumbnails subdirectory, is called when a jpg file is deleted
 
-        :param path:
-        :param filename:
-        :return: none
-        """
-        try:
-            os.chdir (self.basepath+path+'/thumbnails')
-            os.remove(filename+'.240x240_q85_crop.jpg')
-            os.remove(filename+'.120x120_q85_crop.jpg')
-        except IOError:
-           return 'Could not remove thumbnails'
